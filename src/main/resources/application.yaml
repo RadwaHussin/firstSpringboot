@@ -17,4 +17,8 @@
         max-idle: 10
         max-wait: 8000
 
+      jpa:
+        hibernate:
+          ddl-auto: update
+
 

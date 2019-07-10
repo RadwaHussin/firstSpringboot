@@ -6,29 +6,37 @@ import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
-@Entity //To tell spring that Todoo.java is an entry
+@Entity
 @Table(name = "Todoo")
 
 
 public class Todo implements Serializable {
-//public class Todo {
 
 
-    @Id   //to tell Spring that “id” is a primary key
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-//tells Spring that the field is auto-generated
+//    @Column(name ="Id")
 
-    @Column(name ="Id")
+
     private  long id;
-    @Column(name ="Name")
+//    @Column(name ="Name")
+
+    @NotNull(message = "Name is required")
+    @NotEmpty(message = "Name must not be empty")
+    @Size(min = 3 ,message = "name must be at east 3 charachter")
     private  String name;
-    @Column(name ="Department")
+//    @Column(name ="Department")
+
+    @NotNull(message = "Department is required")
+    @NotEmpty(message = "Department must not be empty")
     private  String department;
-    private long timestamp;
 
    public Todo()  {}
 
@@ -37,7 +45,6 @@ public class Todo implements Serializable {
             this.id= id;
             this.name=name;
             this.department=department;
-            this.timestamp = System.currentTimeMillis();
     }
 
     public long getId() {
@@ -64,7 +71,4 @@ public class Todo implements Serializable {
         this.department = department;
     }
 
-    public long getTimestamp(){ return timestamp; }
-
-    public void setTimestamp(long timestamp) {this.timestamp= timestamp ;}
 }

@@ -1,70 +1,72 @@
 package com.abolkog.springboot.tut.todos;
 
-import com.abolkog.springboot.tut.todos.Todo;
-
-import com.abolkog.springboot.tut.todos.TodoController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.abolkog.springboot.tut.todos.TodoRepository;
-
-
-
-
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("Api/v1/todos")
-public class TodoController {
+public class TodoController
+{
 
 
     @Autowired
-
     TodoRepository todoRepository;
 
-    private TodoService todoService; // bydwr 3ala kol elservice
+    @Autowired
+    private TodoService todoService; // autowired
 
-    //Used to fetch all the users from DB
     @GetMapping(value = {"/",""})
-    public List<Todo> getAllTodos () {   // equvilant SELECT * FROM blog
-
-        return todoRepository.findAll();
+    public ResponseEntity<List<Todo>> getAllTodos () {
+        List<Todo> result = todoRepository.findAll();   // hna 3amlt list<Todo> 3shan de el 7aga el btrga3 lakn ta7t 3amlt Todo
+        return new ResponseEntity<List<Todo>>(result,HttpStatus.OK);
     }
 
-    //Used to find and return a user by id
+//    @GetMapping(value = {"/",""})
+//    public List<Todo> getAllTodos () {
+//        return todoRepository.findAll();
+//    }
+
     @GetMapping(value = "/getBy/{id}")
-    public Todo getTodoById ( @PathVariable long id) { // SELECT * FROM blog WHERE id=param LIMIT 1 requestparam:
-
-                System.out.println("ooooooooooooooooooooooooo");
-
-        return  todoRepository.getTodoById(id); // lazm 23mlha el method f el repository
-    }
-
-    @PostMapping(value = {"/create"})     // 3shan ha3ml ha3ml post ha7ot
-    public List<Todo> presist(@RequestBody final Todo todo){
-        System.out.println(todo.getId());
-        System.out.println(todo.getName());
-        System.out.println(todo.getDepartment());
-        System.out.println("HHHHHHHHHHHHHHHHHHHHHHh");
-        todoRepository.save(new Todo(todo.getId(), todo.getName(), todo.getDepartment()));
-        return  todoRepository.findAll();
+    public ResponseEntity<Todo> getTodoById ( @PathVariable long id) {
+         Todo result  =  todoService.getTodoById(id);
+         return new ResponseEntity<Todo>(result,HttpStatus.OK);
 
     }
 
+//    @GetMapping(value = "/getBy/{id}")
+//    public Todo getTodoById ( @PathVariable long id) {
+//        return  todoRepository.getTodoById(id);
+//    }
 
+    @PostMapping(value = {"/create"}) // with respose code
+    public ResponseEntity<Todo> presist(@Valid @RequestBody final Todo todo){
+        Todo result =   todoService.save(new Todo(todo.getId(), todo.getName(), todo.getDepartment())); //hnaaaa
+        return  new ResponseEntity<Todo>(result, HttpStatus.CREATED);
+    }
+
+//    @PostMapping(value = {"/create"})  //without response code
+//    public List<Todo> presist(@Valid @RequestBody final Todo todo){
+//        todoRepository.save(new Todo(todo.getId(), todo.getName(), todo.getDepartment()));
+//        return  todoRepository.findAll();
+//    }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteTodo(@PathVariable long id) {
-
-        System.out.println("ooooooooooooooooooooooooo");
-
-        todoRepository.deleteById(id);  //DELETE FROM blog WHERE id=param
-
+    public ResponseEntity<Void> deleteTodo(@PathVariable long id) {
+        todoRepository.deleteById(id);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT); //3shan lw 7ab ymsa7 7aga msh mwgoda
     }
 
-
+//    @DeleteMapping("/delete/{id}")
+//    public void deleteTodo(@PathVariable long id) {
+//        todoRepository.deleteById(id);
+//    }
 
 }
 

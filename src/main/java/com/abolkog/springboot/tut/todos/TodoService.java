@@ -27,7 +27,6 @@ public class TodoService {
 
     public Todo save(Todo todo)
     {
-
         if(todoRepository.findByName(todo.getName())!= null){
             throw new ConflictException("This name already exists in the database");
         }

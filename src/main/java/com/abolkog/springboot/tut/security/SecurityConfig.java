@@ -1,8 +1,8 @@
 package com.abolkog.springboot.tut.security;
 
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +13,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public final String[] PUBLIC_ENDPOINTS ={
         "Api/v1/todos"
     };
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -3,7 +3,6 @@ package com.abolkog.springboot.tut.todos;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotEmpty;
@@ -12,8 +11,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
-@Entity
+@Entity //specifies that the class is an entity and is mapped to a database table
 @Table(name = "Todoo")
+
+//There are also Hibernate @Entity, @Table, @Id, and @GeneratedValue annotations in the example.
 
 
 public class Todo implements Serializable {

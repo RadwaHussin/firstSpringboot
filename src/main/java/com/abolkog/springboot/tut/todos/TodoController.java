@@ -10,8 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-@RestController
-@RequestMapping("Api/v1/todos")
+@RestController //marks the class as web controller, capable of handling the requests.
+@RequestMapping("Api/v1/todos") //maps HTTP request with a path to a controller method
 public class TodoController
 {
 

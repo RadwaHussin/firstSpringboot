@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Service
+@Service //indicates that an annotated class is a service class.
 public class TodoService {
 
     @Autowired

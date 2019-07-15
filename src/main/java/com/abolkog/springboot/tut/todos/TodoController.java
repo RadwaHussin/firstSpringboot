@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController //marks the class as web controller, capable of handling the requests.
 @RequestMapping("Api/v1/todos") //maps HTTP request with a path to a controller method
-public class TodoController
+public class TodoController // decides what to do with the input and how to output the response.
 {
 
 

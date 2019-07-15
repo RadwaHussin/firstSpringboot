@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class FirstTimeInitializer implements CommandLineRunner {
 
-    private final Log logger = LogFactory.getLog(FirstTimeInitializer.class);
+    private final Log logger = LogFactory.getLog(FirstTimeInitializer.class); // used as system.out.println
 
     @Autowired
     private UserService userService ;
 
     @Override
-    public void run(String... args) throws Exception { // when we run this is the first method run
+    public void run(String... args) throws Exception { // 5 security when we run this is the first method run
 
 //        System.out.println("hiiii radwaaaaaaaaaaaaaaaaa3");
 
@@ -28,7 +28,7 @@ public class FirstTimeInitializer implements CommandLineRunner {
         if(userService.findAll().isEmpty()){
             logger.info("no user account was found. Creating some users");
 
-            AppUser user = new AppUser("Radwa@elmenus.com", "password","radwa"); // this is the user we will create in database
+            AppUser user = new AppUser("Radwa@elmenus.com", "password","radwa"); // this is the user we will created in database
             userService.save(user);
 
         }

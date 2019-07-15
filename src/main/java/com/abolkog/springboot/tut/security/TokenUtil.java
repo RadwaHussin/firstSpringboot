@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component // to be able to use it as autowired
-public class TokenUtil {
+public class TokenUtil { // this class for generating token
+
 
     private final String Cliams_Subject = "sub"; // private attribute can access within the class only while public can access inside or outside the class.
     private final String Claims_CREATED = "created";
@@ -24,17 +25,30 @@ public class TokenUtil {
     private String TOKEN_SECREATE ;
 
     public String generateToken(UserDetails userDetails){
-        // to generate token we need claim , expiration , sign , compact to y7awl token to string
+        // to generate token we need to send claim , expiration , sign , compact to y7awl token to string
 
         Map<String, Object> claims = new HashMap<>();
           claims.put(Cliams_Subject,userDetails.getUsername());  //  claims.put("sub",userDetails.getUsername());
           claims.put(Claims_CREATED,new Date());  //  claims.put("created ", new Date());
 
         return Jwts.builder()   // https://jwt.io/
-           .setClaims(claims)
-           .setExpiration(generateExpirationdate())
+           .setClaims(claims)   // the claim
+           .setExpiration(generateExpirationdate()) //expiration
            .signWith(SignatureAlgorithm.HS512, TOKEN_SECREATE) // make sign for token
            .compact();
+    }
+    ///***
+    //v9
+
+    public String getUserNameFromToken(String token){
+        try {
+             Claims claims = getClaims(token);
+             return claims.getSubject();
+        } catch (Exception ex){
+            return null;
+
+
+        }
     }
 
     private Date generateExpirationdate(){
@@ -42,4 +56,27 @@ public class TokenUtil {
 
     }
 
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        String username = getUserNameFromToken(token);
+        // check username in DB = user in Jwt website     check expiry date
+          return (username.equals(userDetails.getUsername()) && !istokenExpired(token));
+
+    }
+
+    private boolean istokenExpired(String token) { // this function tell us is token is expired or not
+        Date expiration = getClaims(token).getExpiration();
+        return expiration.before(new Date());
+    }
+
+     private Claims getClaims(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser().setSigningKey(TOKEN_SECREATE) // to return the claims
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception ex) {
+            claims = null;
+        }
+         return claims ;
+    }
 }

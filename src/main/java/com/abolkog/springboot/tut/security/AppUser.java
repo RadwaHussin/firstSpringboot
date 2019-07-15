@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity //specifies that the class is an entity and is mapped to a database table
 @Table(name = "users")
 
-public class AppUser implements UserDetails { //AppUser is our model like Todoo class we created before
+public class AppUser implements UserDetails { // 3 AppUser is our model like Todoo class we created before
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,7 +55,7 @@ public class AppUser implements UserDetails { //AppUser is our model like Todoo 
 
     @Override
     public String getUsername() {
-        return email;
+        return name;
     }
 
     @Override

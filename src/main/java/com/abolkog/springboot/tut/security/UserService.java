@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService { //2
 
     @Autowired
     public UserRepository userRepository;
@@ -23,27 +23,29 @@ public class UserService implements UserDetailsService {
     @Bean
     public PasswordEncoder passwordEncoder(){ // to encode the pass
         return new BCryptPasswordEncoder();
-    }
+    } // to encrept the password
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // dumy Data
         //  return new User(" Radwa", passwordEncoder().encode("password"), AuthorityUtils.NO_AUTHORITIES);  //we send username pass and the permession of user
+     // **
         AppUser user = userRepository.findByName (username);
-        // if user nt found
-        if (user == null){
-            System.out.println("oooooooooooooooooo");
-            throw new NotFoundException("user with this email not found" + username);
+
+        if (user == null){ // if user not found
+            System.out.println("oooooooooooooooooo"); // in case user null
+            throw new NotFoundException("user with this email not found");
         }
-        System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuu");
+        System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuu"); // in case user not null
         System.out.println("user" + " "+ user);
 
         return user;
+        // **
     }
        //work
 
     public void save(AppUser user){ // to save our users in Database
-        user.setPassword(passwordEncoder().encode(user.getPassword()));   // we need to encrept the pass while saving user
+        user.setPassword(passwordEncoder().encode(user.getPassword()));  // we need to encrept the pass while saving user
         this.userRepository.save(user);
     }
 

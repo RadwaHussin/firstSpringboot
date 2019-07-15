@@ -23,20 +23,21 @@ public class Todo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-//    @Column(name ="Id")
-
+    @Column(name ="Id")
 
     private  long id;
-//    @Column(name ="Name")
 
+    @Column(name ="Name")
     @NotNull(message = "Name is required")
     @NotEmpty(message = "Name must not be empty")
     @Size(min = 3 ,message = "name must be at east 3 charachter")
-    private  String name;
-//    @Column(name ="Department")
 
+    private  String name;
+
+    @Column(name ="Department")
     @NotNull(message = "Department is required")
     @NotEmpty(message = "Department must not be empty")
+
     private  String department;
 
    public Todo()  {}
@@ -47,6 +48,8 @@ public class Todo implements Serializable {
             this.name=name;
             this.department=department;
     }
+
+    //lombok
 
     public long getId() {
         return id;

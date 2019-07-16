@@ -109,4 +109,5 @@ public class AppUser implements UserDetails { // 3 AppUser is our model like Tod
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

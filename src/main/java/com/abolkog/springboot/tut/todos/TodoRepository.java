@@ -1,5 +1,7 @@
 package com.abolkog.springboot.tut.todos; //DAO
 
+import java.util.List;
+
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +13,5 @@ public interface TodoRepository extends JpaRepository<Todo,Long> { //the layer t
 
     Todo getTodoById (long id);
     Todo findByName (String name );
+//  v10  List<Todo> findByUserId (long userId); //v10 laaaazm ukon fe field aslun f Todo esmo userId
 }

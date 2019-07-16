@@ -40,7 +40,11 @@ public class Todo implements Serializable {
 
     private  String department;
 
-   public Todo()  {}
+//    @GeneratedValue(strategy = GenerationType.AUTO) // marie comment
+//    private long userId;
+
+
+    public Todo()  {}
 
     public Todo (long id , String  name ,String department)
     {
@@ -75,4 +79,11 @@ public class Todo implements Serializable {
         this.department = department;
     }
 
+//    public long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(long userId) {
+//        this.userId = userId;
+//    }
 }
